@@ -163,7 +163,8 @@
 	     bw.write("  private static final long serialVersionUID=1L;\r\n"); 
 	     String[][] ts=new String[r.length][5]; 
 	     for(int i=0;i<r.length;i++){ 
-	         ts[i][0]="Object"; 
+	    	 ts[i][0]="String"; 
+	         ts[i][3]="VARCHAR";
 	         for(String[] temp :db2java) 
 	         {
 	             if(r[i].get("DATA_TYPE").toString().toUpperCase().equals(temp[0])) 
@@ -310,6 +311,9 @@
 	     bw.write("   <if test=\"orderby != null\">\r\n");
 	     bw.write("    order by ${orderby}\r\n");
 	     bw.write(" </if>\r\n");
+	     bw.write("   <if test=\"limit != null\">\r\n");
+	     bw.write("    limit ${limit}\r\n");
+	     bw.write(" </if>\r\n");
 	     bw.write("  </select>\r\n"); 
 	     bw.write("  <select id=\"select_map\" resultType=\"hashmap\" parameterType=\"Map\" >\r\n"); 
 	     bw.write("      SELECT <include refid=\"sqlsel\"/> FROM "+t+"\r\n");
@@ -328,7 +332,7 @@
 	     bw.write("  <insert id=\"insert\" useGeneratedKeys=\"true\" keyProperty=\"id\" parameterType=\""+bt+"\">\r\n"); 
 	     bw.write("      INSERT INTO "+t+" ("+gzq+")VALUES("+gzi+")\r\n"); 
 	     bw.write("  </insert>\r\n"); 
-	     bw.write("  <insert id=\"insertBatch\" parameterType=\"java.util.List\">\r\n"); 
+	     bw.write("  <insert id=\"insertBatch\" useGeneratedKeys=\"true\" keyProperty=\"id\" parameterType=\"java.util.List\">\r\n"); 
 	     bw.write("    <selectKey resultType =\"java.lang.Integer\" keyProperty= \"id\" order= \"AFTER\">\r\n"); 
 	     bw.write("         SELECT LAST_INSERT_ID()\r\n"); 
 	     bw.write("    </selectKey >\r\n"); 
@@ -337,10 +341,10 @@
 	     bw.write("  	("+gzib+")\r\n"); 
 	     bw.write("    </foreach>\r\n"); 
 	     bw.write("  </insert>\r\n"); 
-	     bw.write("  <insert id=\"insertBatchUpdate\" parameterType=\"java.util.List\">\r\n"); 
+	     bw.write("  <insert id=\"insertBatchUpdate\" useGeneratedKeys=\"true\" keyProperty=\"id\" parameterType=\"java.util.List\">\r\n"); 
 	     bw.write("    INSERT INTO "+t+" ("+gzq+")VALUES\r\n"); 
 	     bw.write("    <foreach collection=\"list\" item=\""+t+"\" index=\"index\" separator=\",\">\r\n"); 
-	     bw.write("  	("+gzi+")\r\n"); 
+	     bw.write("  	(#{"+t+".id},"+gzib+")\r\n"); 
 	     bw.write("    </foreach>\r\n"); 
 	     bw.write("  	on duplicate key update "+upgzi+"\r\n"); 
 	     bw.write("  </insert>\r\n"); 

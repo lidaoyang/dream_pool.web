@@ -93,13 +93,25 @@
 	}
     function saveRoleFun(node, checked,roleId){
     	var _children = $('#menuTree').tree('getChildren', node.target);
+    	var _parent = $('#menuTree').tree('getParent', node.target);
+    	if(_parent){
+    		_children.push(_parent);
+    		var _parent2 = $('#menuTree').tree('getParent', _parent.target);
+    		if(_parent2){
+    			_children.push(_parent2);
+    			var _parent3 = $('#menuTree').tree('getParent', _parent2.target);
+        		if(_parent3){
+        			_children.push(_parent3);
+        		}
+    		}
+    	}
 		_children.push(node);
 		var nodes = JSON.stringify(_children);
 		$.post("${ctx}/role_function/save",{roleId:roleId,nodes:nodes,add_flag:checked},
 				function(data){
-	   		 	if(data.success){
+	   		 	if(!data.success){
 	   		 	$.messager.alert('提示',data.msg_desc,'error');
-	   		 	}
+	   		 }
 	   	});
     }
     function f_add(){

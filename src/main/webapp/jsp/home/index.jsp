@@ -106,10 +106,10 @@
 		</div>
 		<div id="navigation" data-options="region:'west',split:true" title="导航" style="width:180px;">
 			<div class="easyui-accordion" data-options="border:false">
-				<c:if test="${fn:length(functions[0].children)==0 }">
+				<c:if test="${fn:length(functions)==0 }">
 					<div title="没有菜单权限" data-options="selected:true" style="padding:10px;">如果需要，请联系管理员</div>
 				</c:if>
-				<c:forEach var="f_parent" items="${functions[0].children }" varStatus="statu">
+				<c:forEach var="f_parent" items="${functions}" varStatus="statu">
 					<div title="${f_parent.text }" <c:if test="${statu.index=='0' }">data-options="selected:true"</c:if> style="padding:10px;">
 						<ul>
 						<c:forEach var="f_child" items="${f_parent.children }">

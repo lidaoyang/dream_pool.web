@@ -42,7 +42,7 @@
 		    columns:[[
 		        {field:'id',title:'id',width:60,align:'center',sortable:true},
 		        {field:'name',title:'菜单名',width:100,align:'left',sortable:true},
-		        {field:'url',title:'URL',width:180,align:'left',sortable:true},
+		        {field:'url',title:'URL',width:230,align:'left',sortable:true},
 			    {field:'is_navigation',title:'导航节点',width:80,align:'center',sortable:true,
 			        formatter: function(value,row,index){
 							if (row.is_navigation=="1"){
@@ -59,7 +59,7 @@
 								} 
 								return "资源数据";
 					}},
-				 {field:'create_time',title:'创建时间',width:160,align:'center',sortable:true,
+				 {field:'create_time',title:'创建时间',width:150,align:'center',sortable:true,
 				        formatter: function(value,row,index){
 								if (row.create_time){
 									 var dd = new Date(row.create_time);
@@ -67,7 +67,7 @@
 								} 
 								return "";
 						 }},
-		        {field:'update_time',title:'更新时间',width:160,align:'center',sortable:true,
+		        {field:'update_time',title:'更新时间',width:150,align:'center',sortable:true,
 			        	formatter: function(value,row,index){
 							if (row.update_time){
 								 var dd = new Date(row.update_time);
