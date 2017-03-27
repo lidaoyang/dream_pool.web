@@ -232,8 +232,8 @@
 	    	 
 	         gzq+=""+ts[i][1]+","; 
 	         gzi+="#{"+ts[i][1]+",jdbcType="+ts[i][3]+"},"; 
-	         upgzi+=ts[i][1]+"=values("+ts[i][1]+"),"; 
 	         if(i>0){
+	        	 upgzi+=ts[i][1]+"=values("+ts[i][1]+"),"; 
 	        	 gzib+="#{"+t+"."+ts[i][1]+"},"; 
 	         }
 	         gzu+=ts[i][1]+""+"=#{"+ts[i][1]+",jdbcType="+ts[i][3]+"},";
@@ -333,15 +333,15 @@
 	     bw.write("      INSERT INTO "+t+" ("+gzq+")VALUES("+gzi+")\r\n"); 
 	     bw.write("  </insert>\r\n"); 
 	     bw.write("  <insert id=\"insertBatch\" useGeneratedKeys=\"true\" keyProperty=\"id\" parameterType=\"java.util.List\">\r\n"); 
-	     bw.write("    <selectKey resultType =\"java.lang.Integer\" keyProperty= \"id\" order= \"AFTER\">\r\n"); 
+	     /* bw.write("    <selectKey resultType =\"java.lang.Integer\" keyProperty= \"id\" order= \"AFTER\">\r\n"); 
 	     bw.write("         SELECT LAST_INSERT_ID()\r\n"); 
-	     bw.write("    </selectKey >\r\n"); 
-	     bw.write("    INSERT INTO "+t+" ("+("id_"+gzq).replace("id_id,", "")+")VALUES\r\n"); 
+	     bw.write("    </selectKey >\r\n"); */ 
+	     bw.write("    INSERT IGNORE INTO "+t+" ("+("id_"+gzq).replace("id_id,", "")+")VALUES\r\n"); 
 	     bw.write("    <foreach collection=\"list\" item=\""+t+"\" index=\"index\" separator=\",\">\r\n"); 
 	     bw.write("  	("+gzib+")\r\n"); 
 	     bw.write("    </foreach>\r\n"); 
 	     bw.write("  </insert>\r\n"); 
-	     bw.write("  <insert id=\"insertBatchUpdate\" useGeneratedKeys=\"true\" keyProperty=\"id\" parameterType=\"java.util.List\">\r\n"); 
+	     bw.write("  <insert id=\"insertBatchUpdate\" parameterType=\"java.util.List\">\r\n"); 
 	     bw.write("    INSERT INTO "+t+" ("+gzq+")VALUES\r\n"); 
 	     bw.write("    <foreach collection=\"list\" item=\""+t+"\" index=\"index\" separator=\",\">\r\n"); 
 	     bw.write("  	(#{"+t+".id},"+gzib+")\r\n"); 
